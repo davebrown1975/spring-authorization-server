@@ -20,10 +20,7 @@ import java.io.IOException;
 import com.gargoylesoftware.htmlunit.Page;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebResponse;
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlInput;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -125,10 +122,12 @@ public class DefaultAuthorizationServerApplicationTests {
 	private static void assertLoginPage(HtmlPage page) {
 		assertThat(page.getUrl().toString()).endsWith("/login");
 
+		HtmlHeading1 customHeading = page.querySelector("#customHeader");
 		HtmlInput usernameInput = page.querySelector("input[name=\"username\"]");
 		HtmlInput passwordInput = page.querySelector("input[name=\"password\"]");
 		HtmlButton signInButton = page.querySelector("button");
 
+		assertThat(customHeading).isNotNull();
 		assertThat(usernameInput).isNotNull();
 		assertThat(passwordInput).isNotNull();
 		assertThat(signInButton.getTextContent()).isEqualTo("Sign in");
